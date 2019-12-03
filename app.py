@@ -70,7 +70,7 @@ app.layout = html.Div([
         dcc.RadioItems(
             id='dimensionality',
             options=[{'label': i, 'value': i} for i in ['2D', '3D']],
-            value='3D',
+            value='2D',
             labelStyle={'display': 'inline-block'}
         )
     ],
@@ -90,17 +90,16 @@ app.layout = html.Div([
     ], style={'display': 'inline-block', 
               'width': '49%'}),
             
-    html.Div([
-        dcc.Graph(id='legend'),
-    ], style={'display': 'inline-block', 
-              'width': '100%'})
+#    html.Div([
+#        dcc.Graph(id='legend'),
+#    ], style={'display': 'inline-block', 
+#              'width': '100%'})
 
     
 ], style={'margin': '5rem'})
     
 @app.callback(
-    [dash.dependencies.Output('manifold', 'figure'), 
-     dash.dependencies.Output('legend', 'figure')],
+    [dash.dependencies.Output('manifold', 'figure')],
     [dash.dependencies.Input('manifold algorithm', 'value'),
      dash.dependencies.Input('dimensionality', 'value')])
 def update_manifold(manifold_algorithm, dim):
@@ -113,8 +112,7 @@ def update_manifold(manifold_algorithm, dim):
         
         manifold_data, manifold_layout, legend_data, legend_layout = dim3manifolds[manifold_algorithm]
         
-    return ({'data': manifold_data, 'layout': manifold_layout}, 
-            {'data': legend_data, 'layout': legend_layout})
+    return ({'data': manifold_data, 'layout': manifold_layout},)
 
         
     
